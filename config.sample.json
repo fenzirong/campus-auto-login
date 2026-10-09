@@ -1,0 +1,44 @@
+﻿{
+  "portalName": "示例大学校园网",
+  "_notes": [
+    "这是示例文件，不要直接使用。请用 Get-PortalConfig.ps1 从真实登录请求生成 config.json。",
+    "login.body 里可用占位符：{user} {pass} {pass_md5} {pass_sha1} {pass_sha256} {pass_b64} {pass_b64md5} {user_b64} {user_md5} {ip} {mac} {mac_plain} {gateway} {hostname} {domain} {ts} {date} {time} {ts_unix} {ts_ms}，以及 preRequests 里提取的变量名。"
+  ],
+  "allowInvalidCertificate": false,
+  "responseEncoding": "utf8",
+  "verifyUrl": "http://www.msftconnecttest.com/connecttest.txt",
+  "verifyExpect": "Microsoft Connect Test",
+  "successKeywords": ["成功", "success", "已上线", "已登录"],
+  "failureKeywords": ["失败", "错误", "密码", "不存在", "欠费", "已禁用", "error"],
+  "credentials": {
+    "user": "20230001",
+    "password": "",
+    "passwordEnc": ""
+  },
+  "preRequests": [
+    {
+      "name": "token",
+      "url": "http://10.10.10.10/portal/index.html",
+      "method": "GET",
+      "regex": "token\\s*=\\s*['\"]([^'\"]+)['\"]",
+      "group": 1,
+      "encoding": "utf8"
+    }
+  ],
+  "login": {
+    "url": "http://10.10.10.10/portal/login",
+    "method": "POST",
+    "contentType": "application/x-www-form-urlencoded",
+    "headers": {
+      "Referer": "http://10.10.10.10/portal/index.html",
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    "body": {
+      "username": "{user}",
+      "password": "{pass}",
+      "token": "{token}",
+      "wlanuserip": "{ip}",
+      "mac": "{mac_plain}"
+    }
+  }
+}
